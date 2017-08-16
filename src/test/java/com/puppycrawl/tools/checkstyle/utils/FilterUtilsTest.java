@@ -58,7 +58,11 @@ public class FilterUtilsTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testNonExistingFile() {
+=======
+    public void testNonExistingFile() throws Exception {
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         assertFalse("Suppression file does not exist",
                 FilterUtils.isFileExists("non-existing.xml"));
     }

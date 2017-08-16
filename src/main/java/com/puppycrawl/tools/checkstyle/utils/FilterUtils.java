@@ -55,6 +55,7 @@ public final class FilterUtils {
             suppressionSourceExists = false;
         }
         finally {
+<<<<<<< HEAD
             suppressionSourceExists = closeQuietlyWithResult(sourceInput, suppressionSourceExists);
         }
         return suppressionSourceExists;
@@ -79,5 +80,17 @@ public final class FilterUtils {
             }
         }
         return closed;
+=======
+            if (sourceInput != null) {
+                try {
+                    sourceInput.close();
+                }
+                catch (IOException ignored) {
+                    suppressionSourceExists = false;
+                }
+            }
+        }
+        return suppressionSourceExists;
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     }
 }

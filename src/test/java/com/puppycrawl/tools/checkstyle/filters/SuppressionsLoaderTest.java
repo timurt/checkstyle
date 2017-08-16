@@ -28,10 +28,14 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import java.util.HashSet;
 import java.util.Set;
 >>>>>>> 70fd16185... Issue #2804: allow suppression by message
+=======
+import java.util.Set;
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +47,7 @@ import org.powermock.reflect.Whitebox;
 import org.xml.sax.InputSource;
 
 import com.puppycrawl.tools.checkstyle.AbstractPathTestSupport;
+import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
 
@@ -319,13 +324,17 @@ public class SuppressionsLoaderTest extends AbstractPathTestSupport {
         assertEquals("Id has to be defined", "someId", id);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
 
     @Test
     public void testXpathSuppressions() throws Exception {
         final String fn = getPath("InputSuppressionsLoaderXpathCorrect.xml");
         final Set<TreeWalkerFilter> filterSet = SuppressionsLoader.loadXpathSuppressions(fn);
 
+<<<<<<< HEAD
         final Set<TreeWalkerFilter> expectedFilterSet = new HashSet<>();
         final XpathFilter xf0 =
                 new XpathFilter("file1", "test", null, "id1", "/CLASS_DEF");
@@ -335,6 +344,9 @@ public class SuppressionsLoaderTest extends AbstractPathTestSupport {
         expectedFilterSet.add(xf1);
         assertEquals("Multiple xpath suppressions were loaded incorrectly", expectedFilterSet,
                 filterSet);
+=======
+        assertEquals("Invalid number of filters", 1, filterSet.size());
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     }
 
     @Test
@@ -346,7 +358,11 @@ public class SuppressionsLoaderTest extends AbstractPathTestSupport {
         }
         catch (CheckstyleException ex) {
             assertEquals("Invalid error message",
+<<<<<<< HEAD
                     "Unable to parse " + fn + " - invalid files or checks or message format for "
+=======
+                    "Unable to parse " + fn + " - invalid files or checks format for "
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
                             + "suppress-xpath",
                     ex.getMessage());
         }
@@ -362,7 +378,11 @@ public class SuppressionsLoaderTest extends AbstractPathTestSupport {
         }
         catch (CheckstyleException ex) {
             assertEquals("Invalid error message",
+<<<<<<< HEAD
                     "Unable to parse " + fn + " - missing checks or id or message attribute for "
+=======
+                    "Unable to parse " + fn + " - missing checks and id attribute for "
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
                             + "suppress-xpath",
                     ex.getMessage());
         }
@@ -375,5 +395,8 @@ public class SuppressionsLoaderTest extends AbstractPathTestSupport {
 
         assertEquals("Invalid number of filters", 1, filterSet.size());
     }
+<<<<<<< HEAD
 >>>>>>> 70fd16185... Issue #2804: allow suppression by message
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
 }

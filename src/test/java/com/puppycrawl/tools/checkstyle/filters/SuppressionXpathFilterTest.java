@@ -108,8 +108,14 @@ public class SuppressionXpathFilterTest extends AbstractModuleTestSupport {
             fail("Exception is expected");
         }
         catch (CheckstyleException ex) {
+<<<<<<< HEAD
             assertEquals("Invalid error message", "Unable to parse " + fileName
                     + " - invalid files or checks or message format for suppress-xpath",
+=======
+            assertEquals("Invalid error message",
+                    "Unable to parse " + fileName + " - invalid files or checks format for "
+                            + "suppress-xpath",
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
                     ex.getMessage());
         }
     }

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suppressions PUBLIC
+<<<<<<< HEAD
     "-//Puppy Crawl//DTD Suppressions Xpath Experimental 1.2//EN"
     "http://checkstyle.sourceforge.net/dtds/suppressions_1_2_xpath_experimental.dtd">
 <suppressions>
   <suppress-xpath files="file1" id="id1" checks="test" query="/CLASS_DEF"/>
   <suppress-xpath message="message1" query="/CLASS_DEF"/>
+=======
+    "-//Puppy Crawl//DTD Suppressions Xpath Experimental 1.1//EN"
+    "http://checkstyle.sourceforge.net/dtds/suppressions_1_1_xpath_experimental.dtd">
+<suppressions>
+  <suppress-xpath files="file1" id="id1" checks="test" query="/CLASS_DEF"/>
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
 </suppressions>

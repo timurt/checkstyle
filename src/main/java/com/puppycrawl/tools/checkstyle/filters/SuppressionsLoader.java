@@ -23,8 +23,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.PatternSyntaxException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,6 +35,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.api.AbstractLoader;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
@@ -57,6 +60,7 @@ public final class SuppressionsLoader
     private static final String DTD_SUPPRESSIONS_NAME_1_1 =
         "com/puppycrawl/tools/checkstyle/suppressions_1_1.dtd";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     /** The public ID for the configuration dtd. */
     private static final String DTD_PUBLIC_ID_1_2 =
@@ -64,10 +68,13 @@ public final class SuppressionsLoader
     /** The resource for the configuration dtd. */
     private static final String DTD_SUPPRESSIONS_NAME_1_2 =
         "com/puppycrawl/tools/checkstyle/suppressions_1_2.dtd";
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     /** The public ID for the configuration dtd. */
     private static final String DTD_PUBLIC_ID_1_1_XPATH =
             "-//Puppy Crawl//DTD Suppressions Xpath Experimental 1.1//EN";
     /** The resource for the configuration dtd. */
+<<<<<<< HEAD
     private static final String DTD_SUPPRESSIONS_NAME_1_1_XPATH =
             "com/puppycrawl/tools/checkstyle/suppressions_1_1_xpath_experimental.dtd";
 <<<<<<< HEAD
@@ -83,13 +90,22 @@ public final class SuppressionsLoader
             "com/puppycrawl/tools/checkstyle/suppressions_1_2_xpath_experimental.dtd";
     /** File search error message. **/
     private static final String UNABLE_TO_FIND_ERROR_MESSAGE = "Unable to find: ";
+=======
+    private static final String DTD_RESOURCE_NAME_1_1_XPATH =
+            "com/puppycrawl/tools/checkstyle/suppressions_1_1_xpath_experimental.dtd";
+    /** File search error message. **/
+    private static final String UNABLE_TO_FIND_ERROR_MESSAGE = "Unable to find: ";
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     /** String literal for attribute name. **/
     private static final String ATTRIBUTE_NAME_FILES = "files";
     /** String literal for attribute name. **/
     private static final String ATTRIBUTE_NAME_CHECKS = "checks";
     /** String literal for attribute name. **/
+<<<<<<< HEAD
     private static final String ATTRIBUTE_NAME_MESSAGE = "message";
     /** String literal for attribute name. **/
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     private static final String ATTRIBUTE_NAME_ID = "id";
     /** String literal for attribute name. **/
     private static final String ATTRIBUTE_NAME_QUERY = "query";
@@ -97,13 +113,21 @@ public final class SuppressionsLoader
     private static final String ATTRIBUTE_NAME_LINES = "lines";
     /** String literal for attribute name. **/
     private static final String ATTRIBUTE_NAME_COLUMNS = "columns";
+<<<<<<< HEAD
 >>>>>>> 70fd16185... Issue #2804: allow suppression by message
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
 
     /**
      * The filter chain to return in getAFilterChain(),
      * configured during parsing.
      */
     private final FilterSet filterChain = new FilterSet();
+
+    /**
+     * The set of the {@code TreeWalkerFilter} filters. Being filled during parsing.
+     */
+    private final Set<TreeWalkerFilter> treeWalkerFilters = new HashSet<>();
 
     /**
      * Creates a new {@code SuppressionsLoader} instance.
@@ -123,27 +147,14 @@ public final class SuppressionsLoader
             throws SAXException {
         if ("suppress".equals(qName)) {
             //add SuppressElement filter to the filter chain
-            final String checks = attributes.getValue("checks");
-            final String modId = attributes.getValue("id");
-            if (checks == null && modId == null) {
-                // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
-                throw new SAXException("missing checks and id attribute");
-            }
-            final SuppressElement suppress;
-            try {
-                final String files = attributes.getValue("files");
-                final String lines = attributes.getValue("lines");
-                final String columns = attributes.getValue("columns");
-                suppress = new SuppressElement(files, checks, modId, lines, columns);
-            }
-            catch (final PatternSyntaxException ex) {
-                // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
-                throw new SAXException("invalid files or checks format", ex);
-            }
+            final SuppressElement suppress = getSuppressElement(attributes);
             filterChain.addFilter(suppress);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         else if ("suppress-xpath".equals(qName)) {
             final XpathFilter filter = getXpathFilter(attributes);
             treeWalkerFilters.add(filter);
@@ -160,21 +171,35 @@ public final class SuppressionsLoader
     private static SuppressElement getSuppressElement(Attributes attributes) throws SAXException {
         final String checks = attributes.getValue(ATTRIBUTE_NAME_CHECKS);
         final String modId = attributes.getValue(ATTRIBUTE_NAME_ID);
+<<<<<<< HEAD
         final String message = attributes.getValue(ATTRIBUTE_NAME_MESSAGE);
         if (checks == null && modId == null && message == null) {
             // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
             throw new SAXException("missing checks or id or message attribute");
+=======
+        if (checks == null && modId == null) {
+            // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
+            throw new SAXException("missing checks and id attribute");
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         }
         final SuppressElement suppress;
         try {
             final String files = attributes.getValue(ATTRIBUTE_NAME_FILES);
             final String lines = attributes.getValue(ATTRIBUTE_NAME_LINES);
             final String columns = attributes.getValue(ATTRIBUTE_NAME_COLUMNS);
+<<<<<<< HEAD
             suppress = new SuppressElement(files, checks, message, modId, lines, columns);
         }
         catch (final PatternSyntaxException ex) {
             // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
             throw new SAXException("invalid files or checks or message format", ex);
+=======
+            suppress = new SuppressElement(files, checks, modId, lines, columns);
+        }
+        catch (final PatternSyntaxException ex) {
+            // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
+            throw new SAXException("invalid files or checks format", ex);
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         }
         return suppress;
     }
@@ -189,15 +214,22 @@ public final class SuppressionsLoader
     private static XpathFilter getXpathFilter(Attributes attributes) throws SAXException {
         final String checks = attributes.getValue(ATTRIBUTE_NAME_CHECKS);
         final String modId = attributes.getValue(ATTRIBUTE_NAME_ID);
+<<<<<<< HEAD
         final String message = attributes.getValue(ATTRIBUTE_NAME_MESSAGE);
         if (checks == null && modId == null && message == null) {
             // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
             throw new SAXException("missing checks or id or message attribute for suppress-xpath");
+=======
+        if (checks == null && modId == null) {
+            // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
+            throw new SAXException("missing checks and id attribute for suppress-xpath");
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         }
         final XpathFilter filter;
         try {
             final String files = attributes.getValue(ATTRIBUTE_NAME_FILES);
             final String xpathQuery = attributes.getValue(ATTRIBUTE_NAME_QUERY);
+<<<<<<< HEAD
             filter = new XpathFilter(files, checks, message, modId, xpathQuery);
         }
         catch (final PatternSyntaxException ex) {
@@ -207,6 +239,15 @@ public final class SuppressionsLoader
         }
         return filter;
 >>>>>>> 70fd16185... Issue #2804: allow suppression by message
+=======
+            filter = new XpathFilter(files, checks, modId, xpathQuery);
+        }
+        catch (final PatternSyntaxException ex) {
+            // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
+            throw new SAXException("invalid files or checks format for suppress-xpath", ex);
+        }
+        return filter;
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
     }
 
     /**
@@ -233,11 +274,50 @@ public final class SuppressionsLoader
     private static FilterSet loadSuppressions(
             InputSource source, String sourceName)
             throws CheckstyleException {
+        return getSuppressionLoader(source, sourceName).filterChain;
+    }
+
+    /**
+     * Returns the suppression {@code TreeWalker} filters in a specified file.
+     * @param filename name of the suppressions file.
+     * @return the set of xpath suppression elements specified in the file.
+     * @throws CheckstyleException if an error occurs.
+     */
+    public static Set<TreeWalkerFilter> loadXpathSuppressions(String filename)
+            throws CheckstyleException {
+        // figure out if this is a File or a URL
+        final URI uri = CommonUtils.getUriByFilename(filename);
+        final InputSource source = new InputSource(uri.toString());
+        return loadXpathSuppressions(source, filename);
+    }
+
+    /**
+     * Returns the suppression {@code TreeWalker} filters in a specified source.
+     * @param source the source for the suppressions.
+     * @param sourceName the name of the source.
+     * @return the set of xpath suppression elements specified in source.
+     * @throws CheckstyleException if an error occurs.
+     */
+    private static Set<TreeWalkerFilter> loadXpathSuppressions(
+            InputSource source, String sourceName)
+            throws CheckstyleException {
+        return getSuppressionLoader(source, sourceName).treeWalkerFilters;
+    }
+
+    /**
+     * Parses specified source and returns the suppression loader.
+     * @param source the source for the suppressions.
+     * @param sourceName the name of the source.
+     * @return the suppression loader
+     * @throws CheckstyleException if an error occurs.
+     */
+    private static SuppressionsLoader getSuppressionLoader(InputSource source, String sourceName)
+            throws CheckstyleException {
         try {
             final SuppressionsLoader suppressionsLoader =
                 new SuppressionsLoader();
             suppressionsLoader.parseInputSource(source);
-            return suppressionsLoader.filterChain;
+            return suppressionsLoader;
         }
         catch (final FileNotFoundException ex) {
             throw new CheckstyleException(UNABLE_TO_FIND_ERROR_MESSAGE + sourceName, ex);
@@ -266,6 +346,7 @@ public final class SuppressionsLoader
 <<<<<<< HEAD
         map.put(DTD_PUBLIC_ID_1_0, DTD_RESOURCE_NAME_1_0);
         map.put(DTD_PUBLIC_ID_1_1, DTD_RESOURCE_NAME_1_1);
+<<<<<<< HEAD
 =======
         map.put(DTD_PUBLIC_ID_1_0, DTD_SUPPRESSIONS_NAME_1_0);
         map.put(DTD_PUBLIC_ID_1_1, DTD_SUPPRESSIONS_NAME_1_1);
@@ -276,6 +357,9 @@ public final class SuppressionsLoader
 =======
         map.put(DTD_PUBLIC_ID_1_2_XPATH, DTD_SUPPRESSIONS_NAME_1_2_XPATH);
 >>>>>>> 70fd16185... Issue #2804: allow suppression by message
+=======
+        map.put(DTD_PUBLIC_ID_1_1_XPATH, DTD_RESOURCE_NAME_1_1_XPATH);
+>>>>>>> 9c43a1d16... Issue #4421: Support suppression-xpath element in SuppressionLoader
         return map;
     }
 }
