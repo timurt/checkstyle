@@ -148,10 +148,9 @@ public class SeparatorWrapCheck
         final int lineNo = ast.getLineNo();
         final String currentLine = getLines()[lineNo - 1];
         final String substringAfterToken =
-                currentLine.substring(colNo + text.length()).trim();
+                currentLine.substring(colNo - 1 + text.length()).trim();
         final String substringBeforeToken =
-                currentLine.substring(0, colNo).trim();
-
+                currentLine.substring(0, colNo - 1).trim();
         if (option == WrapOption.EOL
                 && substringBeforeToken.isEmpty()) {
             log(lineNo, colNo, MSG_LINE_PREVIOUS, text);

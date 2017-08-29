@@ -212,7 +212,7 @@ public class NoWhitespaceAfterCheckTest
         }
         catch (IllegalStateException ex) {
             assertEquals("Invalid exception message",
-                "unexpected ast syntax import[0x-1]", ex.getMessage());
+                "unexpected ast syntax import[0x0]", ex.getMessage());
         }
     }
 

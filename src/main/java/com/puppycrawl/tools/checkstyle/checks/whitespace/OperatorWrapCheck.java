@@ -216,11 +216,11 @@ public class OperatorWrapCheck
             // itself.
             if (option == WrapOption.NL
                     && !text.equals(currentLine.trim())
-                    && CommonUtils.isBlank(currentLine.substring(colNo + text.length()))) {
+                    && CommonUtils.isBlank(currentLine.substring(colNo - 1 + text.length()))) {
                 log(lineNo, colNo, MSG_LINE_NEW, text);
             }
             else if (option == WrapOption.EOL
-                    && CommonUtils.hasWhitespaceBefore(colNo - 1, currentLine)) {
+                    && CommonUtils.hasWhitespaceBefore(colNo - 2, currentLine)) {
                 log(lineNo, colNo, MSG_LINE_PREVIOUS, text);
             }
         }

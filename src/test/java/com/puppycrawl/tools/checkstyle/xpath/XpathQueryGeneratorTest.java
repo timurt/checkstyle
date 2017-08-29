@@ -52,7 +52,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testClassDef() {
         final int lineNumber = 12;
-        final int columnNumber = 0;
+        final int columnNumber = 1;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -66,7 +66,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testMethodDef() {
         final int lineNumber = 45;
-        final int columnNumber = 4;
+        final int columnNumber = 5;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -83,7 +83,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testVariableDef() {
         final int lineNumber = 53;
-        final int columnNumber = 12;
+        final int columnNumber = 13;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -106,7 +106,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testLcurly() {
         final int lineNumber = 37;
-        final int columnNumber = 19;
+        final int columnNumber = 20;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -119,7 +119,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testRcurly() {
         final int lineNumber = 25;
-        final int columnNumber = 4;
+        final int columnNumber = 5;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -132,7 +132,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testExpr() {
         final int lineNumber = 17;
-        final int columnNumber = 49;
+        final int columnNumber = 50;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -147,7 +147,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testLparen() {
         final int lineNumber = 45;
-        final int columnNumber = 30;
+        final int columnNumber = 31;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -170,7 +170,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testPackage() {
         final int lineNumber = 2;
-        final int columnNumber = 0;
+        final int columnNumber = 1;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -182,7 +182,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testImport() {
         final int lineNumber = 5;
-        final int columnNumber = 0;
+        final int columnNumber = 1;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -194,7 +194,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testMethodParams() {
         final int lineNumber = 72;
-        final int columnNumber = 29;
+        final int columnNumber = 30;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -215,7 +215,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testSwitch() {
         final int lineNumber = 37;
-        final int columnNumber = 8;
+        final int columnNumber = 9;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -228,7 +228,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testSwitchCase() {
         final int lineNumber = 38;
-        final int columnNumber = 12;
+        final int columnNumber = 13;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -243,7 +243,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testVariableStringLiteral() {
         final int lineNumber = 47;
-        final int columnNumber = 25;
+        final int columnNumber = 26;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -260,7 +260,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testComma() {
         final int lineNumber = 66;
-        final int columnNumber = 35;
+        final int columnNumber = 36;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -273,7 +273,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testLiteralVoid() {
         final int lineNumber = 65;
-        final int columnNumber = 11;
+        final int columnNumber = 12;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -288,7 +288,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testFirstImport() {
         final int lineNumber = 4;
-        final int columnNumber = 0;
+        final int columnNumber = 1;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();
@@ -300,7 +300,7 @@ public class XpathQueryGeneratorTest extends AbstractPathTestSupport {
     @Test
     public void testLastImport() {
         final int lineNumber = 8;
-        final int columnNumber = 0;
+        final int columnNumber = 1;
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst, lineNumber,
                 columnNumber);
         final List<String> actual = queryGenerator.generate();

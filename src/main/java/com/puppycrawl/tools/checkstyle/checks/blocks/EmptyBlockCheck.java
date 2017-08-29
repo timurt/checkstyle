@@ -195,8 +195,8 @@ public class EmptyBlockCheck
             }
         }
         else {
-            final String firstLine = lines[slistLineNo - 1].substring(slistColNo + 1);
-            final String lastLine = lines[rcurlyLineNo - 1].substring(0, rcurlyColNo);
+            final String firstLine = lines[slistLineNo - 1].substring(slistColNo);
+            final String lastLine = lines[rcurlyLineNo - 1].substring(0, rcurlyColNo - 1);
             // check if all lines are also only whitespace
             returnValue = !(CommonUtils.isBlank(firstLine) && CommonUtils.isBlank(lastLine))
                     || !checkIsAllLinesAreWhitespace(lines, slistLineNo, rcurlyLineNo);
