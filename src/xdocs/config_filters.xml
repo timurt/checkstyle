@@ -633,6 +633,47 @@ public class UserService {
       </subsection>
     </section>
 
+    <section name="SuppressionTestFilter">
+      <subsection name="Description">
+        <p>Since Checkstyle 3.2</p>
+        <p>
+          Filter <code>SuppressionTestFilter</code> rejects
+          audit events for Check errors according to
+          a <a href="config.html#XML_Structure"><em>suppressions XML
+          document</em></a> in a file. If there is no configured
+          suppressions file or the optional is set to true and
+          suppressions file was not found the Filter accepts all audit events.
+        </p>
+      </subsection>
+      <subsection name="Examples">
+        <p>
+          For example, the following configuration fragment directs the
+          Checker to use a <code>SuppressionFilter</code>
+          with suppressions
+          file <code>config/suppressions.xml</code>:
+        </p>
+        <source>
+          &lt;module name=&quot;SuppressionTestFilter&quot;&gt;
+          &lt;/module&gt;
+        </source>
+      </subsection>
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+SuppressionTestFilter">
+              Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="Package">
+        <p> com.puppycrawl.tools.checkstyle.filters </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p> <a href="config.html#Checker">Checker</a> </p>
+      </subsection>
+    </section>
+
     <section name="SuppressWarningsFilter">
       <subsection name="Description">
           <p>Since Checkstyle 5.7</p>
