@@ -494,7 +494,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    public void testFinishLocalSetupFullyInitialized() throws Exception {
+    public void testFinishLocalSetupFullyInitialized() {
         final TreeWalker treeWalker = new TreeWalker();
         final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         treeWalker.setClassLoader(contextClassLoader);
