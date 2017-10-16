@@ -543,6 +543,39 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         assertTrue("Destroy was not called", VerifyDestroyCheck.isDestroyWasCalled());
     }
 
+<<<<<<< HEAD
+=======
+    @Test
+    public void testCacheWhenFileExternalResourceContentDoesNotChange() throws Exception {
+        final DefaultConfiguration filterConfig = createModuleConfig(SuppressionXpathFilter.class);
+        filterConfig.addAttribute("file", getPath("InputTreeWalkerSuppressionXpathFilter.xml"));
+        final DefaultConfiguration treeWalkerConfig = createModuleConfig(TreeWalker.class);
+        treeWalkerConfig.addChild(filterConfig);
+
+        final DefaultConfiguration checkerConfig = new DefaultConfiguration("checkstyle_checks");
+        checkerConfig.addChild(treeWalkerConfig);
+        final File cacheFile = temporaryFolder.newFile();
+        checkerConfig.addAttribute("cacheFile", cacheFile.getPath());
+
+        final Checker checker = new Checker();
+        checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
+        checker.addListener(getBriefUtLogger());
+        checker.configure(checkerConfig);
+
+        final String filePath = temporaryFolder.newFile("file.java").getPath();
+        final String[] expected = CommonUtils.EMPTY_STRING_ARRAY;
+
+        verify(checker, filePath, expected);
+        // One more time to use cache.
+        verify(checker, filePath, expected);
+
+        assertTrue("External resource is not present in cache",
+                new String(Files.readAllBytes(cacheFile.toPath()),
+                        StandardCharsets.UTF_8).contains(
+                                "InputTreeWalkerSuppressionXpathFilter.xml"));
+    }
+
+>>>>>>> b16aef991... Issue #5023: Prohibited the usage of hardcoded encoding in Checkstyle source code;
     /**
      * Could not find proper test case to test pitest mutations functionally.
      * Should be rewritten during grammar update.
