@@ -48,14 +48,23 @@ public final class SuppressionsLoader
     private static final String DTD_PUBLIC_ID_1_0 =
         "-//Puppy Crawl//DTD Suppressions 1.0//EN";
     /** The resource for the configuration dtd. */
-    private static final String DTD_RESOURCE_NAME_1_0 =
+    private static final String DTD_SUPPRESSIONS_NAME_1_0 =
         "com/puppycrawl/tools/checkstyle/suppressions_1_0.dtd";
     /** The public ID for the configuration dtd. */
     private static final String DTD_PUBLIC_ID_1_1 =
         "-//Puppy Crawl//DTD Suppressions 1.1//EN";
     /** The resource for the configuration dtd. */
-    private static final String DTD_RESOURCE_NAME_1_1 =
+    private static final String DTD_SUPPRESSIONS_NAME_1_1 =
         "com/puppycrawl/tools/checkstyle/suppressions_1_1.dtd";
+<<<<<<< HEAD
+=======
+    /** The public ID for the configuration dtd. */
+    private static final String DTD_PUBLIC_ID_1_1_XPATH =
+            "-//Puppy Crawl//DTD Suppressions Xpath Experimental 1.1//EN";
+    /** The resource for the configuration dtd. */
+    private static final String DTD_SUPPRESSIONS_NAME_1_1_XPATH =
+            "com/puppycrawl/tools/checkstyle/suppressions_1_1_xpath_experimental.dtd";
+>>>>>>> 7cf7ce23a... minor: renamed different class fields to have unique names
     /** File search error message. **/
     private static final String UNABLE_TO_FIND_ERROR_MESSAGE = "Unable to find: ";
 
@@ -158,8 +167,14 @@ public final class SuppressionsLoader
      */
     private static Map<String, String> createIdToResourceNameMap() {
         final Map<String, String> map = new HashMap<>();
+<<<<<<< HEAD
         map.put(DTD_PUBLIC_ID_1_0, DTD_RESOURCE_NAME_1_0);
         map.put(DTD_PUBLIC_ID_1_1, DTD_RESOURCE_NAME_1_1);
+=======
+        map.put(DTD_PUBLIC_ID_1_0, DTD_SUPPRESSIONS_NAME_1_0);
+        map.put(DTD_PUBLIC_ID_1_1, DTD_SUPPRESSIONS_NAME_1_1);
+        map.put(DTD_PUBLIC_ID_1_1_XPATH, DTD_SUPPRESSIONS_NAME_1_1_XPATH);
+>>>>>>> 7cf7ce23a... minor: renamed different class fields to have unique names
         return map;
     }
 }
