@@ -47,6 +47,7 @@ import com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck;
 import com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck;
 import com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck;
+import com.puppycrawl.tools.checkstyle.internal.utils.CloseAndFlushTestByteArrayOutputStream;
 
 public class XpathFileGeneratorAuditListenerTest {
 
@@ -64,6 +65,14 @@ public class XpathFileGeneratorAuditListenerTest {
 
     private static final LocalizedMessage FOURTH_MESSAGE = createLocalizedMessage(5, 5,
             TokenTypes.VARIABLE_DEF, "JavadocModuleId", JavadocVariableCheck.class);
+
+    /**
+     * Output stream to hold the test results. The IntelliJ IDEA issues the AutoCloseableResource
+     * warning here, so it need to be suppressed. The {@code ByteArrayOutputStream} does not hold
+     * any resources that need to be released.
+     */
+    private final CloseAndFlushTestByteArrayOutputStream outStream =
+            new CloseAndFlushTestByteArrayOutputStream();
 
     @BeforeClass
     public static void constructEvents() throws Exception {
@@ -161,8 +170,8 @@ public class XpathFileGeneratorAuditListenerTest {
                 + "       files=\"InputXpathFileGeneratorAuditListener.java\"" + EOL
                 + "       checks=\"LeftCurlyCheck\""
                 + EOL
-                + "       query=\"/CLASS_DEF[@text='InputXpathFileGeneratorAuditListener']/OBJBLOCK"
-                + "/LCURLY\"/>" + EOL
+                + "       query=\"/CLASS_DEF[./IDENT[@text='InputXpathFileGeneratorAuditListener']]"
+                + "/OBJBLOCK/LCURLY\"/>" + EOL
                 + "</suppressions>" + EOL;
 
         verifyOutput(expected, event);
@@ -186,13 +195,14 @@ public class XpathFileGeneratorAuditListenerTest {
                 + "<suppress-xpath" + EOL
                 + "       files=\"InputXpathFileGeneratorAuditListener.java\"" + EOL
                 + "       id=\"MyModule\"" + EOL
-                + "       query=\"/CLASS_DEF[@text='InputXpathFileGeneratorAuditListener']/OBJBLOCK"
-                + "/METHOD_DEF[@text='sort']\"/>" + EOL
+                + "       query=\"/CLASS_DEF[./IDENT[@text='InputXpathFileGeneratorAuditListener']]"
+                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='sort']]\"/>" + EOL
                 + "<suppress-xpath" + EOL
                 + "       files=\"InputXpathFileGeneratorAuditListener.java\"" + EOL
                 + "       checks=\"NestedForDepthCheck\"" + EOL
-                + "       query=\"/CLASS_DEF[@text='InputXpathFileGeneratorAuditListener']/OBJBLOCK"
-                + "/METHOD_DEF[@text='sort']/SLIST/LITERAL_FOR/SLIST/LITERAL_FOR\"/>" + EOL
+                + "       query=\"/CLASS_DEF[./IDENT[@text='InputXpathFileGeneratorAuditListener']]"
+                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='sort']]/SLIST/LITERAL_FOR/SLIST"
+                + "/LITERAL_FOR\"/>" + EOL
                 + "</suppressions>" + EOL;
 
         verifyOutput(expected, event1, event2);
@@ -219,11 +229,37 @@ public class XpathFileGeneratorAuditListenerTest {
                 + "<suppress-xpath" + EOL
                 + "       files=\"InputXpathFileGeneratorAuditListener.java\"" + EOL
                 + "       id=\"JavadocModuleId\"" + EOL
-                + "       query=\"/CLASS_DEF[@text='InputXpathFileGeneratorAuditListener']/OBJBLOCK"
-                + "/VARIABLE_DEF[@text='isValid']\"/>" + EOL
+                + "       query=\"/CLASS_DEF[./IDENT[@text='InputXpathFileGeneratorAuditListener']]"
+                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='isValid']]\"/>" + EOL
                 + "</suppressions>" + EOL;
 
         verifyOutput(expected, event1, event2, event3);
+    }
+
+    @Test
+    public void testCloseStream()
+            throws Exception {
+        final XpathFileGeneratorAuditListener listener =
+                new XpathFileGeneratorAuditListener(outStream,
+                        AutomaticBean.OutputStreamOptions.CLOSE);
+        listener.finishLocalSetup();
+        listener.auditStarted(null);
+        listener.auditFinished(null);
+
+        assertEquals("Invalid close count", 1, outStream.getCloseCount());
+    }
+
+    @Test
+    public void testNoCloseStream()
+            throws Exception {
+        final XpathFileGeneratorAuditListener listener =
+                new XpathFileGeneratorAuditListener(outStream,
+                        AutomaticBean.OutputStreamOptions.NONE);
+        listener.finishLocalSetup();
+        listener.auditStarted(null);
+        listener.auditFinished(null);
+
+        assertEquals("Invalid close count", 0, outStream.getCloseCount());
     }
 
     private AuditEvent createAuditEvent(String fileName, int lineNumber, int columnNumber,

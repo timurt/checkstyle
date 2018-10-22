@@ -21,6 +21,7 @@ package com.puppycrawl.tools.checkstyle.xpath;
 
 import static com.puppycrawl.tools.checkstyle.internal.utils.XpathUtil.getXpathItems;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -33,7 +34,11 @@ import com.puppycrawl.tools.checkstyle.AbstractPathTestSupport;
 import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import net.sf.saxon.om.AxisInfo;
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.tree.iter.ArrayIterator;
+import net.sf.saxon.tree.iter.EmptyIterator;
+import net.sf.saxon.tree.util.Navigator;
 
 public class ElementNodeTest extends AbstractPathTestSupport {
 
@@ -71,4 +76,87 @@ public class ElementNodeTest extends AbstractPathTestSupport {
                 root instanceof RootNode);
     }
 
+    @Test
+    public void testGetNodeByValueNumInt() throws Exception {
+        final String xPath = "//NUM_INT[@text = 123]";
+        final List<NodeInfo> nodes = getXpathItems(xPath, rootNode);
+        assertEquals("Invalid number of nodes", 1, nodes.size());
+        assertEquals("Invalid token type", TokenTypes.NUM_INT,
+                ((AbstractNode) nodes.get(0)).getTokenType());
+    }
+
+    @Test
+    public void testGetNodeByValueStringLiteral() throws Exception {
+        final String xPath = "//STRING_LITERAL[@text = 'HelloWorld']";
+        final List<NodeInfo> nodes = getXpathItems(xPath, rootNode);
+        assertEquals("Invalid number of nodes", 2, nodes.size());
+        assertEquals("Invalid token type", TokenTypes.STRING_LITERAL,
+                ((AbstractNode) nodes.get(0)).getTokenType());
+    }
+
+    @Test
+    public void testGetNodeByValueWithSameTokenText() throws Exception {
+        final String xPath = "//MODIFIERS[@text = 'MODIFIERS']";
+        final List<NodeInfo> nodes = getXpathItems(xPath, rootNode);
+        assertEquals("Invalid number of nodes", 0, nodes.size());
+    }
+
+    @Test
+    public void testGetAttributeValue() throws Exception {
+        final DetailAST detailAST = new DetailAST();
+        detailAST.setType(TokenTypes.IDENT);
+        detailAST.setText("HelloWorld");
+
+        final ElementNode elementNode = new ElementNode(rootNode, rootNode, detailAST);
+
+        assertEquals("Invalid text attribute", "HelloWorld",
+                elementNode.getAttributeValue(null, "text"));
+    }
+
+    @Test
+    public void testGetAttributeValueNoAttribute() throws Exception {
+        final DetailAST detailAST = new DetailAST();
+        detailAST.setType(TokenTypes.CLASS_DEF);
+        detailAST.setText("HelloWorld");
+
+        final ElementNode elementNode = new ElementNode(rootNode, rootNode, detailAST);
+
+        assertNull("Must be null", elementNode.getAttributeValue(null, "text"));
+    }
+
+    @Test
+    public void testGetAttributeValueWrongAttribute() throws Exception {
+        final DetailAST detailAST = new DetailAST();
+        detailAST.setType(TokenTypes.IDENT);
+        detailAST.setText("HelloWorld");
+
+        final ElementNode elementNode = new ElementNode(rootNode, rootNode, detailAST);
+
+        assertNull("Must be null", elementNode.getAttributeValue(null, "wroooong"));
+    }
+
+    @Test
+    public void testIterateAxisEmptyChildren() {
+        final DetailAST detailAST = new DetailAST();
+        detailAST.setType(TokenTypes.METHOD_DEF);
+        final ElementNode elementNode = new ElementNode(rootNode, null, detailAST);
+        assertTrue("Invalid iterator",
+                elementNode.iterateAxis(AxisInfo.CHILD) instanceof EmptyIterator);
+        assertTrue("Invalid iterator",
+                elementNode.iterateAxis(AxisInfo.DESCENDANT) instanceof EmptyIterator);
+    }
+
+    @Test
+    public void testIterateAxisWithChildren() {
+        final DetailAST detailAST = new DetailAST();
+        detailAST.setType(TokenTypes.METHOD_DEF);
+        final DetailAST childAst = new DetailAST();
+        childAst.setType(TokenTypes.VARIABLE_DEF);
+        detailAST.addChild(childAst);
+        final ElementNode elementNode = new ElementNode(rootNode, null, detailAST);
+        assertTrue("Invalid iterator",
+                elementNode.iterateAxis(AxisInfo.CHILD) instanceof ArrayIterator);
+        assertTrue("Invalid iterator", elementNode.iterateAxis(AxisInfo.DESCENDANT)
+                instanceof Navigator.DescendantEnumeration);
+    }
 }

@@ -51,10 +51,10 @@ public class XpathRegressionFallThroughTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[@text='SuppressionXpathRegressionExplicitOne']/OBJBLOCK"
-                + "/METHOD_DEF[@text='test']/SLIST/LITERAL_SWITCH/CASE_GROUP",
-            "/CLASS_DEF[@text='SuppressionXpathRegressionExplicitOne']/OBJBLOCK"
-                + "/METHOD_DEF[@text='test']/SLIST/LITERAL_SWITCH/CASE_GROUP/LITERAL_CASE"
+            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitOne']]/OBJBLOCK"
+                + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP[3]",
+            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitOne']]/OBJBLOCK"
+                + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP/LITERAL_CASE"
         );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
@@ -76,11 +76,13 @@ public class XpathRegressionFallThroughTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[@text='SuppressionXpathRegressionExplicitTwo']/OBJBLOCK"
-                + "/METHOD_DEF[@text='methodFallThruCustomWords']/SLIST/LITERAL_WHILE/SLIST"
-                + "/LITERAL_SWITCH/CASE_GROUP",
-            "/CLASS_DEF[@text='SuppressionXpathRegressionExplicitTwo']/OBJBLOCK"
-                + "/METHOD_DEF[@text='methodFallThruCustomWords']/SLIST/LITERAL_WHILE/SLIST"
+            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitTwo']]/OBJBLOCK"
+                + "/METHOD_DEF["
+                + "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
+                + "/LITERAL_SWITCH/CASE_GROUP[2]",
+            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitTwo']]/OBJBLOCK"
+                + "/METHOD_DEF["
+                + "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
                 + "/LITERAL_SWITCH/CASE_GROUP/LITERAL_DEFAULT"
         );
 

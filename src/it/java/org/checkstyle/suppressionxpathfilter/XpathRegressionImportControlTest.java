@@ -120,7 +120,7 @@ public class XpathRegressionImportControlTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/IMPORT[./DOT[@text='Scanner']]"
+            "/IMPORT[2]"
         );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
