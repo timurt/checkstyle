@@ -961,6 +961,21 @@ public class XpathMapperTest extends AbstractPathTestSupport {
         assertThat("Result nodes differ from expected", actual, equalTo(expected));
     }
 
+    @Test
+    public void testCount() throws Exception {
+        final String xpath = "//RCURLY[parent::SLIST[count(./*)=1]] ";
+        final RootNode rootNode = getRootNode("InputXpathMapperCount.java");
+        final DetailAST[] actual = convertToArray(getXpathItems(xpath, rootNode));
+        final DetailAST expectedRcurlyNode = getSiblingByType(rootNode.getUnderlyingNode(),
+                TokenTypes.CLASS_DEF)
+                .findFirstToken(TokenTypes.OBJBLOCK)
+                .findFirstToken(TokenTypes.CTOR_DEF)
+                .findFirstToken(TokenTypes.SLIST)
+                .findFirstToken(TokenTypes.RCURLY);
+        final DetailAST[] expected = {expectedRcurlyNode};
+        assertThat("Result nodes differ from expected", actual, equalTo(expected));
+    }
+
     private RootNode getRootNode(String fileName) throws Exception {
         final File file = new File(getPath(fileName));
         final DetailAST rootAst = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
